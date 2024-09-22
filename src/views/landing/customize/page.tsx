@@ -1,12 +1,12 @@
 'use client';
 import React, { useState } from 'react';
-import { Grid, Box, Typography, Container, useMediaQuery, useTheme } from '@mui/material';
-import Image from 'next/image';
+import { Grid, Box, Typography, Container, useMediaQuery, useTheme, Chip, Stack } from '@mui/material';
 import Skills, { Skill } from '@/api/skills';
+import SkillsChart from '../home/skillschart';
 
 const SkillSelector = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const [selectedSkill, setSelectedSkill] = useState<Skill>(Skills[0]);
 
@@ -15,8 +15,8 @@ const SkillSelector = () => {
   };
 
   return (
-    <Container maxWidth="lg" sx={{ py: { xs: 4, md: 8 } }}>
-      <Box sx={{ textAlign: 'center', mb: 4 }}> {/* Centered title and subtitle */}
+    <Container maxWidth="lg" sx={{ py: { xs: 4, md: 2 } }}>
+      <Box sx={{ textAlign: 'center', mb: 4 }}>
         <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold' }}>
           What I can do?
         </Typography>
@@ -25,8 +25,15 @@ const SkillSelector = () => {
         </Typography>
       </Box>
 
-      {/* Skill Selector */}
-      <Box sx={{ bgcolor: '#f0f0f0', p: 2, borderRadius: 2, mb: 4, display: 'flex', justifyContent: 'center' }}> {/* Gray box */}
+      <Box sx={{ 
+        bgcolor: '#f0f0f0', 
+        p: 2, 
+        borderRadius: 2, 
+        mb: 4, 
+        display: 'flex', 
+        justifyContent: 'center',
+        overflowX: 'auto', 
+      }}> 
         {Skills.map((skill) => (
           <Box
             key={skill.id}
@@ -34,9 +41,13 @@ const SkillSelector = () => {
             sx={{
               cursor: 'pointer',
               mx: 2,
-              border: selectedSkill.id === skill.id ? '2px solid blue' : 'none',
-              borderRadius: 1,
+              border: selectedSkill.id === skill.id ? '2px solid blue' : '0px solid #fff', 
+              borderRadius: 2, 
               p: 1,
+              minWidth: 80, 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center', 
             }}
           >
             <Typography variant="body1" sx={{ fontWeight: selectedSkill.id === skill.id ? 'bold' : 'normal' }}>
@@ -46,25 +57,28 @@ const SkillSelector = () => {
         ))}
       </Box>
 
-      {/* Skill Details */}
-      <Grid container spacing={4} sx={{ alignItems: 'center' }}> {/* Align items to center */}
-        <Grid item xs={12} md={6} order={{ xs: 2, md: 1 }}> {/* Text first on mobile */}
-          <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
-            {selectedSkill.name}
-          </Typography>
-          <Typography variant="body1" paragraph sx={{ mb: 2 }}> {/* Added margin bottom */}
-            {selectedSkill.description}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Tags: {selectedSkill.tags.join(', ')}
-          </Typography>
+      {/* Grid container centrado */}
+     
+        {/* Stack para controlar el orden del gráfico y el texto */}
+        <Grid item xs={12} md={8}  sx={{ textAlign: 'center' }}> 
+          <Stack direction={{ xs: 'column-reverse'}} spacing={0}> 
+            <SkillsChart chartName={selectedSkill.name + ' Skills'} /> 
+            <Box>
+              <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
+                {selectedSkill.name}
+              </Typography>
+              <Typography variant="body1" paragraph sx={{ mb: 2 }}> 
+                {selectedSkill.description}
+              </Typography>
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, justifyContent: 'center' }}>
+                {selectedSkill.tags.map((tag) => (
+                  <Chip key={tag} label={tag} size="small" /> 
+                ))}
+              </Box>
+            </Box>
+          </Stack>
         </Grid>
-        <Grid item xs={12} md={6} order={{ xs: 1, md: 2 }}> {/* Image second on mobile */}
-          <Box sx={{ textAlign: 'right' }}> {/* Align image to the right */}
-            <Image src={selectedSkill.image} alt={selectedSkill.name} width={isMobile ? 300 : 400} height={isMobile ? 200 : 300} />
-          </Box>
-        </Grid>
-      </Grid>
+      
     </Container>
   );
 };

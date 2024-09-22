@@ -9,15 +9,18 @@ import Cta from './cta';
 import Gallery from './gallery';
 import SkillSelector from '../customize/page';
 import SkillsSection from './quotes';
+import YouTubeEmbed from './youtube';
 function LandingPage() {
   return (
     <Box sx={{minHeight: '100%'}}>
   
         <Box sx={{minHeight: 800}}>
-        <Description /> 
+        <Description />
+       
         <SkillsSection /> 
-     
+      
         <Cta /> 
+        <YouTubeEmbed />  
         <SkillSelector /> 
           <Hero /> 
           <Features /> 

@@ -19,7 +19,7 @@ export default function Home() {
 
   return (
     <>
-      <Header showLandingPage={showLandingPage} onToggleView={handleToggleView} />
+      <Header mainPage showLandingPage={showLandingPage} onToggleView={handleToggleView} /> 
       <Box sx={{ bgcolor: '#ffffff' }}>
         {showLandingPage ? <LandingPage /> : <Gallery />}
       </Box>

@@ -1,36 +1,34 @@
+'use client';
 import React from 'react';
-import Grid from '@mui/material/Grid';
-import Link from 'next/link';
-import Typography from '@mui/material/Typography';
-import { Box } from '@mui/material';
+import { Box, Stack, Typography, Container } from '@mui/material';
+import Image from 'next/image';
 
 const Footer: React.FC = () => {
   return (
-    <Box sx={{ mt: 'auto' }}> 
-      <Grid container alignItems="center" justifyContent="space-between" p={2}>
-        <Grid item xs={12} sm={4}>
-          <Typography variant="body2" color="textSecondary">
-            © {new Date().getFullYear()} Tu Empresa
+    <Box sx={{ display: 'flex', justifyContent: 'center' }}> {/* Added Box for centering */}
+      <Container maxWidth="lg" sx={{ m: 4, p: 1, borderRadius: 4, backgroundColor: '#f1f1f1', mt: 4 }}>
+        <Stack 
+          direction="column" 
+          alignItems="center" 
+          justifyContent="center" 
+          spacing={1}
+          sx={{ py: 2 }} 
+        >
+          <Typography variant="body2" color="text.secondary">
+            Developed by
           </Typography>
-        </Grid>
-        <Grid item xs={12} sm={8} container justifyContent="flex-end" spacing={2}>
-          <Grid item>
-            <Link href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-              <Typography variant="body2">Home</Typography>
-            </Link>
-          </Grid>
-          <Grid item>
-            <Link href="/customize" style={{ textDecoration: 'none', color: 'inherit' }}>
-              <Typography variant="body2">Customize</Typography>
-            </Link>
-          </Grid>
-          <Grid item>
-            <Link href="/terms" style={{ textDecoration: 'none', color: 'inherit' }}>
-              <Typography variant="body2">Terms & Conditions</Typography>
-            </Link>
-          </Grid>
-        </Grid>
-      </Grid>
+          <Image 
+  src="/landing/alhazredLogo.svg" 
+  alt="Alhazred Logo" 
+  width={200} 
+  height={25}
+  style={{ opacity: 0.5 }} // Added opacity style
+/>
+          <Typography variant="body2" color="text.secondary">
+            Alhazred - {new Date().getFullYear()}
+          </Typography> 
+        </Stack>
+      </Container>
     </Box>
   );
 };
